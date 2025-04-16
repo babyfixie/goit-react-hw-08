@@ -1,0 +1,16 @@
+.ulNav {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.ulNav a {
+  text-decoration: none;
+  color: black;
+}
+
+.activeLink {
+  font-weight: bold;
+  color: royalblue;
+  border-bottom: 2px solid royalblue;
+}
