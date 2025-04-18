@@ -1,17 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { refreshUser } from "../../redux/auth/operations";
-import { fetchContacts } from "../../redux/contacts/operations";
 
-import {
-  selectIsRefreshing,
-  selectIsLoggedIn,
-} from "../../redux/auth/selectors";
+import { selectIsRefreshing, selectIsLoggedIn } from "../../redux/auth/selectors";
 import Layout from "../Layout/Layout";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import RestrictedRoute from "../RestrictedRoute/RestrictedRoute";
@@ -33,12 +25,6 @@ const App = () => {
     dispatch(refreshUser());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      dispatch(fetchContacts());
-    }
-  }, [dispatch, isLoggedIn]);
-
   return isRefreshing ? (
     <p>Refreshing user...</p>
   ) : (
@@ -47,22 +33,10 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
-          <Route
-            path="register"
-            element={<RestrictedRoute component={<RegistrationPage />} />}
-          />
-          <Route
-            path="login"
-            element={isLoggedIn ? <Navigate to="/contacts" /> : <LoginPage />}
-          />
-          <Route
-            path="contacts"
-            element={<PrivateRoute component={<ContactsPage />} />}
-          />
-          <Route
-            path="*"
-            element={<Navigate to={isLoggedIn ? "/contacts" : "/login"} />}
-          />
+          <Route path="register" element={<RestrictedRoute component={<RegistrationPage />} />} />
+          <Route path="login" element={isLoggedIn ? <Navigate to="/contacts" /> : <LoginPage />} />
+          <Route path="contacts" element={<PrivateRoute component={<ContactsPage />} />} />
+          <Route path="*" element={<Navigate to={isLoggedIn ? "/contacts" : "/login"} />} />
         </Route>
       </Routes>
     </div>
